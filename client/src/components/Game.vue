@@ -17,8 +17,12 @@ const tileSize = 20;
 const gameWidth = props.boardWidth * tileSize;
 const gameHeight = props.boardHeight * tileSize;
 
-const player1 = { x: 0, y: 0 };
-const player2 = { x: props.boardWidth - 1, y: props.boardHeight - 1 };
+const player1 = { x: 0, y: 0, color: "red" };
+const player2 = {
+  x: props.boardWidth - 1,
+  y: props.boardHeight - 1,
+  color: "blue",
+};
 
 const draw = function () {
   const getCircle = function (x, y) {
@@ -35,23 +39,24 @@ const draw = function () {
 
   const ctx = canvas.getContext("2d");
 
-  const player1Circle = getCircle(
-    player1.x * tileSize + tileSize / 2,
-    player1.y * tileSize + tileSize / 2
-  );
-  const player2Circle = getCircle(
-    player2.x * tileSize + tileSize / 2,
-    player2.y * tileSize + tileSize / 2
-  );
+  const drawPlayer = function (player) {
+    const playerCircle = getCircle(
+      player.x * tileSize + tileSize / 2,
+      player.y * tileSize + tileSize / 2
+    );
 
-  ctx.fillStyle = "red";
-  ctx.fill(player1Circle);
+    ctx.fillStyle = player.color;
+    ctx.fill(playerCircle);
+  };
 
-  ctx.fillStyle = "blue";
-  ctx.fill(player2Circle);
+  drawPlayer(player1);
+  drawPlayer(player2);
 };
 
 onMounted(() => {
+  // TODO: make this an event loop
+  // TODO: update player positions every frame
+  // TODO: event handlers for controls
   draw();
 });
 </script>
